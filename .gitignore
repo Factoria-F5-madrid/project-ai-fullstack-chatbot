@@ -4,8 +4,6 @@ node_modules/
 # Secretos: la API key vive aquí y JAMÁS se sube a git
 .env
 
-# Material del profesor (moodboards, diseño, guiones de clase, contexto de Claude,
-# checkpoints con las soluciones de cada paso): no va al repo de los alumnos
+
 docs/
-CLAUDE.md
 checkpoints/
