@@ -1,0 +1,362 @@
+/* ===== Volumen · página de libros ===================================== */
+
+:root{
+  color-scheme:light;
+  /* DÍA: papel luminoso + esmeralda viva + ámbar. Vivos, no neón */
+  --crema:#FAF8F0; --papel:#FFFFFF; --blanco-papel:#FDFDFA;
+  --tinta:#191817; --tinta-suave:#5D5C55;
+  --burdeos:#117A54; --burdeos-2:#0A5238;
+  --oro:#E09A26; --oro-tinta:#A26608;
+  --azul:#14735E; --madera:#A0794A;
+  --linea:#E8E5DA; --linea-2:#D5D1C2;
+  --claro:#F3FAF5; --sobre-acento:#FFFFFF;
+  /* la luz de lámpara sobre el papel */
+  --foco:rgba(255,251,238,.6);
+  --f-rotulo:"Fraunces", Georgia, serif;
+  --f-cuerpo:"IBM Plex Sans", system-ui, sans-serif;
+  --f-maquina:"Courier Prime", "Courier New", monospace;
+  --f-mano:"Dancing Script", "Caveat", "Segoe Script", cursive;
+}
+
+/* NOCHE: carbón verdoso, texto hueso, esmeralda y ámbar encendidos */
+html[data-tema="noche"]{
+  color-scheme:dark;
+  --crema:#161A18; --papel:#212623; --blanco-papel:#2A302C;
+  --tinta:#EDEFEA; --tinta-suave:#A2A89F;
+  --burdeos:#2FB380; --burdeos-2:#1A6B4C;
+  --oro:#F2B33D; --oro-tinta:#F4C464;
+  --azul:#7FD6B0; --madera:#8A6B44;
+  --linea:#2E3531; --linea-2:#3C4540;
+  --claro:#EDF7F1; --sobre-acento:#0B2C1F;
+  --foco:rgba(160,185,165,.09);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0; background-color:var(--crema); color:var(--tinta);
+  /* luz de lámpara sobre la mesa + grano de papel sutil (ruido SVG, ~4%) */
+  background-image:
+    radial-gradient(1100px 650px at 50% 160px, var(--foco), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23p)'/%3E%3C/svg%3E");
+  background-attachment:fixed, scroll;
+  font-family:var(--f-cuerpo); font-size:16px; line-height:1.6;
+  transition:background-color .3s, color .3s;
+}
+a{color:var(--azul);}
+button{font:inherit; cursor:pointer;}
+:focus-visible{outline:2px solid var(--azul); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important;}
+}
+
+
+/* ---------- cabecera ---------- */
+.cabecera{
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between;
+  gap:8px 24px; max-width:1100px; margin:0 auto;
+  padding:26px clamp(16px,4vw,40px) 6px;
+}
+.logo{
+  margin:0; font-family:var(--f-rotulo); font-weight:900; font-size:32px;
+  letter-spacing:.05em; text-shadow:2px 2px 0 var(--oro);
+}
+.logo small{
+  display:block; font-family:var(--f-maquina); font-weight:400; font-size:10.5px;
+  letter-spacing:.28em; text-transform:uppercase; color:var(--tinta-suave);
+  margin-top:4px; text-shadow:none;
+}
+.nav{display:flex; align-items:center; gap:16px;}
+.nav a{
+  text-decoration:none; font-weight:500; font-size:14.5px;
+  border-bottom:2px solid transparent; padding-bottom:2px;
+}
+.nav a:hover{border-bottom-color:var(--oro);}
+.tema-btn{
+  font-family:var(--f-maquina); font-size:11.5px; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  background:transparent; color:var(--azul); border:1.5px solid var(--azul);
+  border-radius:999px; padding:5px 13px;
+}
+.tema-btn:hover{background:color-mix(in srgb, var(--azul) 14%, transparent);}
+
+/* ---------- hero ---------- */
+.hero{max-width:1100px; margin:0 auto; padding:26px clamp(16px,4vw,40px) 0; text-align:center;}
+.hero h1{
+  font-family:var(--f-rotulo); font-weight:600; font-size:clamp(28px,4.6vw,44px);
+  line-height:1.12; margin:0 auto 12px; max-width:20ch; text-wrap:balance;
+}
+.hero h1 em{font-style:italic; color:var(--burdeos);}
+.hero-sub{margin:0 auto 26px; max-width:54ch; color:var(--tinta-suave);}
+.busca{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;}
+.busca input{
+  font:inherit; font-size:15px; color:var(--tinta);
+  background:var(--blanco-papel); border:1.5px solid var(--linea-2); border-radius:999px;
+  padding:11px 20px; width:min(380px,100%);
+}
+.busca input::placeholder{color:#A99C82;}
+.busca button{
+  font-weight:600; font-size:15px;
+  background:var(--burdeos); color:var(--sobre-acento); border:none; border-radius:999px; padding:11px 26px;
+}
+.busca button:hover{background:var(--burdeos-2);}
+
+/* ---------- la balda y Bartleby ---------- */
+.balda{position:relative; height:96px; margin-top:10px; border-bottom:9px solid var(--madera);}
+.balda::after{content:""; position:absolute; inset:auto 0 -13px 0; height:4px; background:rgba(41,33,26,.16);}
+.paseante{
+  position:absolute; bottom:0; left:0; width:66px; border:none; background:none; padding:0;
+  cursor:pointer;
+  animation:pasear 26s linear infinite alternate;
+}
+.paseante svg{display:block; width:66px; height:auto; shape-rendering:crispEdges; animation:voltear 52s steps(1) infinite;}
+.paseante #abierto{display:none;}
+.paseante.abierto #cerrado{display:none;}
+.paseante.abierto #abierto{display:block;}
+.brinco{display:block; animation:brincar .5s steps(2) infinite;}
+#patasB{opacity:0;}
+.paseante:not(.abierto) #patasA{animation:zancadaA .5s steps(1) infinite;}
+.paseante:not(.abierto) #patasB{animation:zancadaB .5s steps(1) infinite;}
+.paseante.abierto, .paseante.abierto svg, .paseante.abierto .brinco{animation-play-state:paused;}
+@keyframes pasear{from{left:0;} to{left:calc(100% - 70px);}}
+@keyframes voltear{0%,49.99%{transform:scaleX(1);} 50%,100%{transform:scaleX(-1);}}
+@keyframes brincar{0%,49%{transform:translateY(0);} 50%,100%{transform:translateY(-2px);}}
+@keyframes zancadaA{0%,49%{opacity:1;} 50%,100%{opacity:0;}}
+@keyframes zancadaB{0%,49%{opacity:0;} 50%,100%{opacity:1;}}
+@media (prefers-reduced-motion: reduce){
+  .paseante{left:50%; margin-left:-33px;}
+}
+/* Cartelito "¡hazme clic!": viaja con Bartleby y desaparece mientras habla */
+.pista{
+  position:absolute; bottom:112%; left:50%;
+  width:max-content; font-family:var(--f-mano); font-weight:700; font-size:16px; color:#1C1206;
+  background:linear-gradient(105deg, #F3E6C1, #E9D6A2); border:1px solid #C2A76C;
+  padding:2px 11px 3px; pointer-events:none;
+  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.28));
+  animation:flotar 2.2s ease-in-out infinite;
+}
+@keyframes flotar{
+  0%,100%{transform:translateX(-50%) rotate(-3deg) translateY(0);}
+  50%{transform:translateX(-50%) rotate(-3deg) translateY(-4px);}
+}
+@media (prefers-reduced-motion: reduce){
+  .pista{transform:translateX(-50%) rotate(-3deg);}
+}
+.paseante.abierto .pista{display:none;}
+.bocadillo{
+  position:absolute; bottom:118%; left:50%; transform:translateX(-50%);
+  width:max-content; max-width:min(320px,80vw);
+  background:var(--blanco-papel); border:1.5px solid var(--burdeos); border-radius:10px;
+  padding:12px 16px; text-align:center;
+  opacity:0; pointer-events:none; transition:opacity .25s; z-index:3;
+}
+.bocadillo::after{
+  content:""; position:absolute; top:100%; left:50%; margin-left:-6px;
+  border:6px solid transparent; border-top-color:var(--burdeos);
+}
+.paseante.abierto .bocadillo{opacity:1;}
+.bocadillo .frase{
+  display:block; font-family:var(--f-rotulo); font-style:italic; font-weight:600;
+  font-size:14.5px; line-height:1.45; color:var(--tinta);
+}
+.bocadillo .fuente{
+  display:block; margin-top:7px; font-family:var(--f-maquina);
+  font-size:11px; letter-spacing:.04em; color:var(--oro-tinta);
+}
+
+/* ---------- franjas 80s ---------- */
+.franjas{display:grid; gap:3px; max-width:1100px; margin:0 auto; padding:0 clamp(16px,4vw,40px);}
+.franjas i{display:block; border-radius:2px;}
+.franjas i:nth-child(1){height:6px; background:var(--burdeos);}
+.franjas i:nth-child(2){height:4px; background:var(--oro);}
+.franjas i:nth-child(3){height:2px; background:var(--azul);}
+
+/* ---------- catálogo ---------- */
+.catalogo{max-width:1100px; margin:0 auto; padding:34px clamp(16px,4vw,40px) 64px;}
+/* Barra de filtros: una sola línea; los chips se deslizan si no caben */
+.filtros{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+.chips{
+  display:flex; gap:8px; flex:1 1 auto; min-width:0;
+  overflow-x:auto; scrollbar-width:none; padding-block:2px;
+  mask-image:linear-gradient(90deg, #000 calc(100% - 26px), transparent);
+}
+.chips::-webkit-scrollbar{display:none;}
+.chip{
+  flex:none;
+  font-family:var(--f-maquina); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  border:1.5px solid var(--burdeos); color:var(--burdeos); background:transparent;
+  border-radius:999px; padding:5px 12px;
+}
+.chip.activo{background:var(--burdeos); color:var(--sobre-acento);}
+.chip:hover:not(.activo){background:rgba(125,43,43,.08);}
+.orden{
+  font-family:var(--f-maquina); font-size:12px; letter-spacing:.06em;
+  background:var(--blanco-papel); color:var(--tinta); border:1.5px solid var(--linea-2);
+  border-radius:8px; padding:7px 10px; margin-left:auto;
+}
+.contador{font-family:var(--f-maquina); font-size:12.5px; color:var(--tinta-suave); margin:0 0 18px;}
+
+.tarjetas{display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:26px 22px;}
+.tarjeta{position:relative; animation:aparecer .45s ease-out backwards;}
+@keyframes aparecer{from{opacity:0; transform:translateY(12px);}}
+.cubierta{
+  position:relative; aspect-ratio:2/3; border-radius:4px 8px 8px 4px;
+  display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px;
+  padding:18px; text-align:center; background:#3F443E;
+  box-shadow:inset 7px 0 0 rgba(0,0,0,.22), 0 6px 14px rgba(0,0,0,.18);
+  transition:transform .22s, box-shadow .22s;
+}
+/* Portada real (Open Library); si falla la descarga, se ve la cubierta generada de debajo */
+.cubierta .cara-img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:inherit;
+}
+.cubierta:has(.cara-img)::before{display:none;}
+.cubierta:has(.cara-img)::after{
+  inset:0; border:none; border-radius:inherit;
+  background:linear-gradient(90deg, rgba(0,0,0,.30), rgba(0,0,0,0) 14%);
+}
+/* canto de páginas en el borde derecho */
+.cubierta::before{
+  content:""; position:absolute; top:5px; bottom:5px; right:2px; width:5px; border-radius:2px;
+  background:repeating-linear-gradient(180deg, #FFF8E7 0 2px, #E3D6B8 2px 4px); opacity:.92;
+}
+/* marco interior fino */
+.cubierta::after{
+  content:""; position:absolute; inset:8px 12px 8px 10px;
+  border:1px solid rgba(252,248,236,.5); border-radius:3px; pointer-events:none;
+}
+.tarjeta:hover .cubierta, .tarjeta:focus-within .cubierta{
+  transform:rotate(-2.2deg) translateY(-6px);
+  box-shadow:inset 7px 0 0 rgba(0,0,0,.22), 0 14px 26px rgba(41,33,26,.24);
+}
+.cubierta .t{
+  font-family:var(--f-rotulo); font-weight:700; font-size:20px; line-height:1.12;
+  color:var(--claro); text-wrap:balance; margin:0;
+}
+.cubierta .a{
+  font-family:var(--f-maquina); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(252,248,236,.85); margin:0;
+}
+/* Nota de la librera: papel envejecido con tinta de pluma, esquina doblada y celo.
+   Pegada ENCIMA de la portada — sobresale del borde y proyecta sombra propia. */
+.etiqueta-mano{
+  position:absolute; bottom:-18px; left:5%; transform:rotate(-2deg);
+  width:max-content; max-width:92%;
+  background:
+    radial-gradient(130% 100% at 18% 0%, rgba(255,255,255,.4), transparent 55%),
+    linear-gradient(105deg, #F3E6C1, #E9D6A2);
+  border:1px solid #C2A76C; border-radius:1px;
+  font-family:var(--f-mano); font-weight:700; font-size:19px; line-height:1.25; color:#1C1206;
+  text-align:center;
+  padding:8px 16px 9px; pointer-events:none; z-index:3;
+  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  filter:drop-shadow(0 7px 9px rgba(0,0,0,.35));
+  box-shadow:inset 0 0 16px rgba(122,90,32,.22);
+}
+/* trozo de celo */
+.etiqueta-mano::before{
+  content:""; position:absolute; top:-9px; left:50%; width:46px; height:15px;
+  transform:translateX(-50%) rotate(2deg);
+  background:rgba(255,255,255,.48); border:1px solid rgba(0,0,0,.05); border-radius:1px;
+}
+/* esquina doblada */
+.etiqueta-mano::after{
+  content:""; position:absolute; right:0; bottom:0; width:12px; height:12px;
+  background:linear-gradient(315deg, transparent 49%, #B69A5D 50%, #E4D09B 100%);
+}
+/* Alternar lado e inclinación para que parezcan pegadas a mano, no en serie */
+.tarjeta:nth-child(even) .etiqueta-mano{left:auto; right:5%; transform:rotate(2deg);}
+.t-datos{padding:12px 4px 0;}
+.con-etiqueta .t-datos{padding-top:26px;}
+.t-datos h3{font-family:var(--f-rotulo); font-weight:600; font-size:17.5px; margin:0 0 1px;}
+.t-datos .autor{font-size:13.5px; color:var(--azul); margin:0 0 6px;}
+.t-meta{display:flex; align-items:center; gap:10px; font-size:13px; margin:0 0 6px;}
+.t-meta .estrellas{color:var(--oro-tinta); font-weight:600;}
+.t-meta .genero{
+  font-family:var(--f-maquina); font-size:10.5px; letter-spacing:.10em; text-transform:uppercase;
+  color:var(--azul); border:1px solid var(--azul); border-radius:999px; padding:2px 8px;
+}
+.t-datos .desc{
+  font-size:13px; line-height:1.5; color:var(--tinta-suave); margin:0;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
+
+.vacio{
+  font-family:var(--f-mano); font-weight:600; font-size:26px; color:var(--tinta-suave);
+  text-align:center; margin:48px 0; transform:rotate(-1deg);
+}
+
+/* ---------- Margarita: el chat (se añade en el paso 3 del taller) ---------- */
+.chat-abrir{
+  position:fixed; right:18px; bottom:18px; z-index:50;
+  width:64px; height:64px; border-radius:50%;
+  background:var(--papel); border:1.5px solid var(--linea-2);
+  box-shadow:0 10px 24px rgba(0,0,0,.28);
+  display:flex; align-items:center; justify-content:center; padding:0;
+  animation:flotar-suave 2.6s ease-in-out infinite;
+}
+.chat-abrir svg{width:32px; height:auto; shape-rendering:crispEdges;}
+.chat-abrir .chat-pista{
+  position:absolute; bottom:112%; right:0;
+  width:max-content; font-family:var(--f-mano); font-weight:700; font-size:15px; color:#1C1206;
+  background:linear-gradient(105deg, #F3E6C1, #E9D6A2); border:1px solid #C2A76C;
+  padding:2px 10px 3px; pointer-events:none;
+  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.25));
+}
+@keyframes flotar-suave{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);} }
+
+.chat{
+  position:fixed; right:16px; bottom:16px; z-index:60;
+  width:min(380px, calc(100vw - 32px)); height:min(540px, calc(100vh - 32px));
+  background:var(--papel); border:1px solid var(--linea-2); border-radius:14px;
+  box-shadow:0 24px 60px rgba(0,0,0,.35);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.chat[hidden]{display:none;}
+.chat-cab{
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  padding:12px 14px; background:var(--burdeos-2); color:var(--claro);
+}
+.chat-quien b{font-family:var(--f-rotulo); font-size:16px; letter-spacing:.02em;}
+.chat-quien small{display:block; font-family:var(--f-maquina); font-size:10px; letter-spacing:.08em; opacity:.75; margin-top:2px;}
+.chat-cab button{border:none; background:none; color:var(--claro); font-family:var(--f-maquina); font-size:15px; padding:4px 8px;}
+.chat-msgs{
+  flex:1; overflow-y:auto; padding:14px;
+  display:flex; flex-direction:column; gap:10px; background:var(--crema);
+}
+.msg{max-width:86%; padding:9px 13px; border-radius:12px; font-size:14px; line-height:1.5; white-space:pre-wrap;}
+.msg.user{align-self:flex-end; background:var(--burdeos); color:var(--sobre-acento); border-bottom-right-radius:4px;}
+.msg.bot{
+  align-self:flex-start; border-bottom-left-radius:4px;
+  background:linear-gradient(105deg, #F7EDD3, #EFDFB6); color:#1C1206;
+  border:1px solid #D8C9A2;
+}
+.msg.escribiendo{font-style:italic; color:#7A6A45; animation:latido 1.2s ease-in-out infinite;}
+@keyframes latido{ 0%,100%{opacity:.55;} 50%{opacity:1;} }
+.msg.error{background:transparent; border:1.5px dashed var(--burdeos); color:var(--tinta-suave); font-style:italic;}
+.chat-form{display:flex; gap:8px; padding:10px; border-top:1px solid var(--linea); background:var(--papel);}
+.chat-form input{
+  flex:1; min-width:0; font:inherit; font-size:14px; color:var(--tinta);
+  background:var(--blanco-papel); border:1.5px solid var(--linea-2); border-radius:999px;
+  padding:9px 16px;
+}
+.chat-form input::placeholder{color:#A99C82;}
+.chat-form button{
+  font-weight:600; font-size:14px; background:var(--burdeos); color:var(--sobre-acento);
+  border:none; border-radius:999px; padding:9px 18px;
+}
+.chat-form button:hover{background:var(--burdeos-2);}
+.chat-form button:disabled{opacity:.55; cursor:default;}
+@media (max-width:480px){
+  .chat{right:8px; left:8px; bottom:8px; width:auto;}
+}
+
+/* ---------- pie ---------- */
+.pie{
+  background:var(--burdeos-2); color:#F2E4C8; text-align:center;
+  padding:22px clamp(16px,4vw,40px);
+  font-family:var(--f-maquina); font-size:12.5px; letter-spacing:.08em;
+}
+.pie p{margin:0;}
+.pie b{color:var(--oro); letter-spacing:.16em;}

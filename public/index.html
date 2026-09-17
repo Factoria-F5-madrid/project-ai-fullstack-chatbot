@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marginalia · Libros</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="cabecera">
+    <p class="logo">MARGINALIA <small>libros · notas al margen · desde 1983</small></p>
+    <nav class="nav">
+      <a href="#catalogo">Catálogo</a>
+      <button class="tema-btn" id="tema" type="button" aria-label="Cambiar entre versión de día y de noche">☾ Noche</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Libros, historias y <em>pequeños descubrimientos</em></h1>
+    <p class="hero-sub">Una colección escogida a mano, sin prisa y sin caja registradora. Busca, curiosea… y haz clic en el librito de la balda: siempre guarda una cita.</p>
+    <form class="busca" role="search" id="form-busca">
+      <input type="search" id="busca" placeholder="Busca por título o autor…" autocomplete="off" aria-label="Buscar por título o autor">
+      <button type="submit">Buscar</button>
+    </form>
+
+    <div class="balda">
+      <button class="paseante" id="bartleby" type="button" aria-label="Bartleby, el libro de la casa. Púlsalo y te lee una cita.">
+        <span class="pista" aria-hidden="true">¡hazme clic!</span>
+        <span class="bocadillo" id="bocadillo" aria-live="polite">
+          <span class="frase" id="cita-frase"></span>
+          <span class="fuente" id="cita-fuente"></span>
+        </span>
+        <span class="brinco">
+          <svg viewBox="0 0 16 20" role="img" aria-hidden="true">
+            <!-- CERRADO: libro vertical con lomo, canto de páginas y tejuelo -->
+            <g id="cerrado">
+              <rect x="3"  y="1"  width="11" height="1"  fill="#FFF8E7"/>
+              <rect x="2"  y="2"  width="11" height="13" fill="#7D2B2B"/>
+              <rect x="2"  y="2"  width="2"  height="13" fill="#571D1D"/>
+              <rect x="13" y="2"  width="1"  height="13" fill="#FFF8E7"/>
+              <rect x="14" y="2"  width="1"  height="13" fill="#E3D6B8"/>
+              <rect x="6"  y="4"  width="1"  height="2"  fill="#1D150F"/>
+              <rect x="9"  y="4"  width="1"  height="2"  fill="#1D150F"/>
+              <rect x="5"  y="9"  width="7"  height="1"  fill="#D8A03C"/>
+              <rect x="6"  y="11" width="5"  height="1"  fill="#D8A03C"/>
+              <rect x="14" y="15" width="1"  height="3"  fill="#D8A03C"/>
+              <g id="patasA">
+                <rect x="4" y="15" width="2" height="4" fill="#29211A"/>
+                <rect x="9" y="15" width="2" height="4" fill="#29211A"/>
+              </g>
+              <g id="patasB">
+                <rect x="6"  y="15" width="2" height="4" fill="#29211A"/>
+                <rect x="11" y="15" width="2" height="4" fill="#29211A"/>
+              </g>
+            </g>
+            <!-- ABIERTO: dos páginas en V mientras lee la cita -->
+            <g id="abierto">
+              <rect x="0"  y="3"  width="5"  height="1"  fill="#FFF8E7"/>
+              <rect x="11" y="3"  width="5"  height="1"  fill="#FFF8E7"/>
+              <rect x="0"  y="4"  width="7"  height="11" fill="#FFF8E7"/>
+              <rect x="9"  y="4"  width="7"  height="11" fill="#FFF8E7"/>
+              <rect x="7"  y="5"  width="2"  height="10" fill="#7D2B2B"/>
+              <rect x="1"  y="6"  width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="1"  y="8"  width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="1"  y="10" width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="1"  y="12" width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="10" y="6"  width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="10" y="8"  width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="10" y="10" width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="10" y="12" width="5"  height="1"  fill="#E3D6B8"/>
+              <rect x="0"  y="15" width="16" height="1"  fill="#571D1D"/>
+              <rect x="5"  y="16" width="2"  height="4"  fill="#29211A"/>
+              <rect x="10" y="16" width="2"  height="4"  fill="#29211A"/>
+            </g>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <div class="franjas" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <main id="catalogo" class="catalogo">
+    <div class="filtros">
+      <div class="chips" id="chips"></div>
+      <select class="orden" id="orden" aria-label="Ordenar el catálogo">
+        <option value="balda">Orden: como en la balda</option>
+        <option value="valoracion">Mejor valorados</option>
+        <option value="anio">Por año de publicación</option>
+        <option value="titulo">Título A–Z</option>
+      </select>
+    </div>
+    <p class="contador" id="contador"></p>
+    <div class="tarjetas" id="grid"></div>
+    <p class="vacio" id="vacio" hidden>No lo tenemos… todavía. Prueba con «Dune» o «Le Guin».</p>
+  </main>
+
+  <footer class="pie">
+    <p><b>MARGINALIA</b> · libros desde 1983 · los viernes, club de lectura</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
