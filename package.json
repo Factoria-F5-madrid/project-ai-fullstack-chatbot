@@ -1,0 +1,13 @@
+{
+  "name": "marginalia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marginalia — página de libros con chatbot: taller de integración de un LLM en una app web",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2"
+  }
+}
